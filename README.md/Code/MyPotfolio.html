@@ -1,0 +1,3373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neo Mphahlele - Cybersecurity & Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3B82F6",
+              secondary: "#1E3A8A",
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* ====== NEW: SMOOTH SCROLLING ====== */
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px; /* Space for fixed header */
+      }
+
+      /* Preloader Styles */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a0a0a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s, visibility 0.5s;
+      }
+
+      #preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid rgba(59, 130, 246, 0.2);
+        border-bottom-color: #3b82f6;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      :where([class^="ri-"])::before {
+        content: "\f3c2";
+      }
+
+      body {
+        background-image: url("https://i.pinimg.com/736x/99/40/70/994070e136e17dc4b8c9d43ff8cdd72e.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        background-color: #0a0a0a;
+        color: #ffffff;
+      }
+
+      .glass-container {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      .glass-card {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(0, 102, 255, 0.753);
+        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      /* NEW PROFILE RING STYLES      New Profile Ring Styles */
+      .profile-ring-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 400px; /* Increased from 300px to 400px */
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0.3); /* Enhanced shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin: 0 auto;
+      }
+
+      .profile-ring-wrapper:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 60px rgba(39, 92, 255, 0.7); /* Enhanced glow on hover */
+      }
+
+      .profile-ring-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: 50%;
+        filter: brightness(1.1) contrast(1.1);
+      }
+
+      .profile-ring-wrapper svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .animated-ring {
+        fill: none;
+        stroke: #00ffff;
+        stroke-width: 6; /* Increased from 4 to 6 */
+        stroke-dasharray: 1256; /* Updated for larger circle */
+        stroke-dashoffset: 1256; /* Updated for larger circle */
+        animation: draw 4s ease-in-out forwards,
+          glow 2s ease-in-out infinite alternate;
+        filter: drop-shadow(0 0 15px rgb(36, 96, 230)); /* Enhanced glow */
+      }
+
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes glow {
+        0% {
+          stroke: lab(44.75% 43.37 -87.19);
+          filter: drop-shadow(0 0 10px rgb(0, 68, 255)); /* Enhanced glow */
+        }
+        100% {
+          stroke: hsl(226, 100%, 50%);
+          filter: drop-shadow(0 0 25px #00f7ff); /* Enhanced glow */
+        }
+      }
+      /*-- END OF ADDITION */
+
+      /* Enhanced Neon Circuit Border Styles */
+      .profile-pic-container {
+        position: relative;
+        display: inline-block;
+        border-radius: 32px; /* Matches your rounded-3xl (32px) */
+        max-width: 70%;
+        overflow: hidden; /* Ensures border effects stay contained */
+      }
+
+      .profile-pic-container img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 32px; /* Matches container */
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        transition: transform 0.5s ease, filter 0.5s ease;
+      }
+
+      .profile-pic-container:hover img {
+        transform: scale(1.02);
+        filter: brightness(1.1);
+      }
+
+      /* Enhanced border that follows image outline */
+      .circuit-border {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+        border-radius: 40px; /* Slightly larger than image radius */
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+        /* Creates outline effect */
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+      }
+
+      /* Animated circuit pattern */
+      .circuit-border::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            90deg,
+            transparent 45%,
+            rgba(59, 130, 246, 0.8) 50%,
+            transparent 55%
+          ),
+          linear-gradient(
+            0deg,
+            transparent 45%,
+            rgba(59, 130, 246, 0.8) 50%,
+            transparent 55%
+          );
+        background-size: 50px 50px;
+        animation: circuit-animate 3s linear infinite;
+        border-radius: inherit; /* Follows container shape */
+        filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.7));
+      }
+
+      /* Glowing dot that follows the border path */
+      .circuit-border::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: #3b82f6;
+        border-radius: 50%;
+        box-shadow: 0 0 15px #3b82f6, 0 0 30px #3b82f6;
+        animation: follow-border-path 8s cubic-bezier(0.785, 0.135, 0.15, 0.86)
+          infinite;
+        z-index: 2;
+      }
+
+      /* Animation for circuit pattern */
+      @keyframes circuit-animate {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 50px 50px;
+        }
+      }
+
+      /* Animation for dot following exact border path */
+      @keyframes follow-border-path {
+        0% {
+          top: -4px;
+          left: 10%;
+          transform: translateY(0);
+        }
+        25% {
+          top: -4px;
+          left: 90%;
+          transform: translateY(0);
+        }
+        50% {
+          top: calc(100% - 8px);
+          left: 90%;
+          transform: translateY(0);
+        }
+        75% {
+          top: calc(100% - 8px);
+          left: 10%;
+          transform: translateY(0);
+        }
+        100% {
+          top: -4px;
+          left: 10%;
+          transform: translateY(0);
+        }
+      }
+
+      /* Hover effects */
+      .profile-pic-container:hover .circuit-border::before {
+        animation-duration: 2s;
+        filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.9));
+      }
+
+      .profile-pic-container:hover .circuit-border::after {
+        animation-duration: 6s;
+        box-shadow: 0 0 20px #3b82f6, 0 0 40px #3b82f6;
+      }
+
+      /* Theme toggle styles */
+      .theme-toggle {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 100;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(59, 130, 246, 0.2);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+      }
+
+      .theme-toggle:hover {
+        background: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+      }
+
+      .theme-toggle i {
+        font-size: 1.5rem;
+        color: #3b82f6;
+      }
+
+      /* Contact form fixes */
+      .contact-input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        color: #fff;
+        border-radius: 8px;
+        padding: 12px 16px;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
+
+      .contact-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      }
+
+      .contact-input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .contact-label {
+        color: #fff;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      /* Active navigation link */
+      .nav-link.active {
+        color: #93c5fd;
+        position: relative;
+      }
+
+      .nav-link.active::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #3b82f6;
+        border-radius: 2px;
+      }
+
+      /* Skill bar animations */
+      .skill-bar-inner {
+        height: 100%;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        transition: width 1.5s ease-in-out;
+      }
+
+      /* Project card enhancements */
+      .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+      }
+
+      .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .project-image {
+        transition: transform 0.5s ease;
+      }
+
+      .project-card:hover .project-image {
+        transform: scale(1.05);
+      }
+
+      .floating-social {
+        position: fixed;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 50;
+      }
+
+      @media (max-width: 768px) {
+        .floating-social {
+          position: relative;
+          right: auto;
+          top: auto;
+          transform: none;
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin: 2rem 0;
+        }
+
+        .profile-pic-container {
+          max-width: 80%;
+          margin: 0 auto;
+        }
+
+        .circuit-border::before {
+          background-size: 30px 30px;
+        }
+
+        .circuit-border::after {
+          width: 10px;
+          height: 10px;
+        }
+      }
+
+      /*<!-- ADD THIS SECTION - MOBILE STYLES FOR PROFILE RING -->*/
+      .profile-ring-wrapper {
+        max-width: 250px;
+      }
+      /*<!-- END OF ADDITION -->*/
+
+      .profile-ring-wrapper {
+        max-width: 320px; /* Increased from 250px */
+      }
+
+      /* Popup/Modal Styles */
+      .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .popup-overlay.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .confirmation-popup {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        position: relative;
+        transform: translateY(-20px);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .popup-overlay.show .confirmation-popup {
+        transform: translateY(0);
+      }
+
+      .close-btn {
+        background-color: #0447ff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+      }
+
+      .close-btn:hover {
+        background-color: #45a049;
+      }
+
+      /* Form button styling */
+      #contact-form button[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      #contact-form button[type="submit"]:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+      }
+
+      #contact-form button[type="submit"]:active {
+        transform: translateY(0);
+      }
+
+      /* Error message styling */
+      .hidden {
+        display: none;
+      }
+
+      #form-message {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+      }
+
+      #form-message.bg-red-900 {
+        background-color: #7f1d1d;
+        color: #fecaca;
+      }
+
+      /* Form button styling */
+      #sendMessage {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      #sendMessage:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+      }
+
+      #sendMessage:active {
+        transform: translateY(0);
+      }
+
+      /* Certifications Section Styles */
+      /* NEW: Certification Section Styles */
+      .certification-card {
+        background: rgba(1, 19, 29, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+
+      .certification-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        border-color: rgba(59, 130, 246, 0.5);
+      }
+
+      .cert-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(59, 130, 246, 0.2);
+        color: #3b82f6;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .cert-category-section {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .category-header {
+        position: relative;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+      }
+
+      .category-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        border-radius: 3px;
+      }
+
+      .cert-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+        backdrop-filter: blur(10px);
+      }
+
+      .cert-modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .cert-modal-content {
+        background: rgba(20, 20, 20, 0.95);
+        border-radius: 12px;
+        max-width: 800px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 2rem;
+        position: relative;
+        transform: translateY(20px);
+        transition: transform 0.3s ease-in-out;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .cert-modal-overlay.active .cert-modal-content {
+        transform: translateY(0);
+      }
+
+      .cert-modal-close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .cert-modal-close-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: rotate(90deg);
+      }
+
+      .cert-modal-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .cert-modal-body {
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .cert-modal-image {
+        max-width: 100%;
+        max-height: 60vh;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .cert-modal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Badge animation */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .floating-badge {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .cert-modal-content {
+          padding: 1.5rem;
+        }
+
+        .certification-card {
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      /*education Timeline styles */
+      .timeline-container {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .timeline-container::after {
+        content: "";
+        position: absolute;
+        width: 4px;
+        background: linear-gradient(to bottom, #3b82f6, #1e3a8a);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -2px;
+        border-radius: 10px;
+      }
+
+      .timeline-card {
+        position: relative;
+        width: 50%;
+        padding: 20px 40px;
+        box-sizing: border-box;
+      }
+
+      .timeline-card.left {
+        left: 0;
+      }
+
+      .timeline-card.right {
+        left: 50%;
+      }
+
+      .timeline-card::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #3b82f6;
+        border: 4px solid #1e3a8a;
+        top: 32px;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
+      .timeline-card.left::after {
+        right: -10px;
+      }
+
+      .timeline-card.right::after {
+        left: -10px;
+      }
+
+      .card-content {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(0, 102, 255, 0.753);
+        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        height: 100%;
+      }
+
+      .card-content:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        border-color: #3b82f6;
+      }
+
+      .education-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .education-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(59, 130, 246, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .education-icon i {
+        font-size: 24px;
+        color: #3b82f6;
+      }
+
+      .education-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 5px;
+      }
+
+      .education-subtitle {
+        font-size: 0.9rem;
+        color: #93c5fd;
+      }
+
+      .education-details {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease, padding 0.5s ease;
+        padding: 0 15px;
+      }
+
+      .education-card:hover .education-details,
+      .education-card.active .education-details {
+        max-height: 500px;
+        padding: 15px;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .skill-badge {
+        background: rgba(59, 130, 246, 0.15);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 20px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        text-align: center;
+        color: #93c5fd;
+        transition: all 0.3s ease;
+      }
+
+      .skill-badge:hover {
+        background: rgba(59, 130, 246, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .highlight {
+        position: relative;
+        display: inline-block;
+      }
+
+      .highlight::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30%;
+        background: rgba(59, 130, 246, 0.3);
+        z-index: -1;
+        transition: height 0.3s ease;
+      }
+
+      .highlight:hover::after {
+        height: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .timeline-container::after {
+          left: 31px;
+        }
+
+        .timeline-card {
+          width: 100%;
+          padding-left: 70px;
+          padding-right: 25px;
+        }
+
+        .timeline-card.right {
+          left: 0;
+        }
+
+        .timeline-card.left::after,
+        .timeline-card.right::after {
+          left: 21px;
+        }
+      }
+
+      /* ====== NEW: DARK MODE TOGGLE STYLES ====== */
+      body.light-mode {
+        background-image: none;
+        background-color: #f3f4f6;
+        color: #1f2937;
+      }
+
+      body.light-mode .glass-container {
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      body.light-mode .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      body.light-mode .text-gray-200,
+      body.light-mode .text-gray-300 {
+        color: #4b5563 !important;
+      }
+
+      body.light-mode .text-white {
+        color: #1f2937 !important;
+      }
+
+      body.light-mode .text-gray-400 {
+        color: #6b7280 !important;
+      }
+
+      body.light-mode .contact-input {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        color: #1f2937;
+      }
+
+      body.light-mode .contact-input::placeholder {
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      body.light-mode .skill-badge {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        color: #3b82f6;
+      }
+
+      body.light-mode .theme-toggle {
+        background: rgba(59, 130, 246, 0.1);
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+      }
+
+      /* Adjust the circuit border for light mode */
+      body.light-mode .circuit-border::before {
+        background: linear-gradient(
+            90deg,
+            transparent 45%,
+            rgba(59, 130, 246, 0.6) 50%,
+            transparent 55%
+          ),
+          linear-gradient(
+            0deg,
+            transparent 45%,
+            rgba(59, 130, 246, 0.6) 50%,
+            transparent 55%
+          );
+      }
+
+      /* ====== END: DARK MODE TOGGLE STYLES ====== */
+
+      /* ====== NEW: HAMBURGER MENU ANIMATION ====== */
+      .hamburger {
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        background: none;
+        border: none;
+        z-index: 10;
+      }
+
+      .hamburger-top,
+      .hamburger-middle,
+      .hamburger-bottom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 24px;
+        height: 2px;
+        background: #3b82f6;
+        transform: rotate(0);
+        transition: all 0.5s;
+      }
+
+      .hamburger-middle {
+        transform: translateY(7px);
+      }
+
+      .hamburger-bottom {
+        transform: translateY(14px);
+      }
+
+      .open .hamburger-top {
+        transform: rotate(45deg) translateY(6px) translate(6px);
+      }
+
+      .open .hamburger-middle {
+        display: none;
+      }
+
+      .open .hamburger-bottom {
+        transform: rotate(-45deg) translateY(6px) translate(-6px);
+      }
+      /* ====== END: HAMBURGER MENU ANIMATION ====== */
+    </style>
+  </head>
+
+  <body class="font-sans antialiased">
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="theme-toggle">
+      <i class="ri-moon-line"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 w-full glass-container z-40 border-b border-gray-200/20"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="font-bold text-xl text-blue-400">Neo Mphahlele</div>
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="#home"
+              class="nav-link text-blue-400 hover:text-blue-600 transition-colors"
+              >Home</a
+            >
+            <a
+              href="#about"
+              class="nav-link text-blue-400 hover:text-blue-600 transition-colors"
+              >About</a
+            >
+            <a
+              href="#skills"
+              class="nav-link text-blue-400 hover:text-blue-600 transition-colors"
+              >Skills</a
+            >
+            <a
+              href="#certifications"
+              class="nav-link text-blue-400 hover:text-blue-600 transition-colors"
+              >Certifications</a
+            >
+            <a
+              href="#projects"
+              class="nav-link text-blue-400 hover:text-blue-600 transition-colors"
+              >Projects</a
+            >
+            <a
+              href="#contact"
+              class="nav-link text-blue-400 hover:text-blue-600 transition-colors"
+              >Contact</a
+            >
+          </div>
+
+          <!-- ====== NEW: ANIMATED HAMBURGER MENU ====== -->
+          <button id="mobile-menu-toggle" class="md:hidden p-2 hamburger">
+            <div class="hamburger-top"></div>
+            <div class="hamburger-middle"></div>
+            <div class="hamburger-bottom"></div>
+          </button>
+        </div>
+      </div>
+      <div
+        id="mobile-menu"
+        class="md:hidden hidden bg-gray-900 border-t border-gray-700"
+      >
+        <div class="px-4 py-2 space-y-2">
+          <a
+            href="#home"
+            class="block py-2 text-blue-400 hover:text-blue-600 transition-colors"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="block py-2 text-blue-400 hover:text-blue-600 transition-colors"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="block py-2 text-blue-400 hover:text-blue-600 transition-colors"
+            >Skills</a
+          >
+          <a
+            href="#certifications"
+            class="block py-2 text-blue-400 hover:text-blue-600 transition-colors"
+            >Certifications</a
+          >
+          <a
+            href="#projects"
+            class="block py-2 text-blue-400 hover:text-blue-600 transition-colors"
+            >Projects</a
+          >
+          <a
+            href="#contact"
+            class="block py-2 text-blue-400 hover:text-blue-600 transition-colors"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Floating Social Media -->
+    <div class="floating-social">
+      <div class="flex flex-col space-y-4">
+        <a
+          href="https://www.linkedin.com/in/neo-mphahlele-123456789"
+          target="_blank"
+          class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center hover:bg-secondary transition-colors shadow-lg"
+        >
+          <i class="ri-linkedin-line"></i>
+        </a>
+        <a
+          href="https://github.com/Neo-Cyphers"
+          target="_blank"
+          class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-gray-900 transition-colors shadow-lg"
+        >
+          <i class="ri-github-line"></i>
+        </a>
+        <a
+          href="mailto:Lesegokota@gmail.com"
+          class="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"
+        >
+          <i class="ri-mail-line"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="min-h-screen flex items-center justify-center relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent backdrop-blur-sm"
+      ></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div class="text-left">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-white">
+              Hello, I'm <span class="text-blue-400">Neo Mphahlele </span>
+            </h1>
+            <p class="text-xl lg:text-2xl mb-8 font-light text-gray-200">
+              Cybersecurity, Software Developer & AI Enthusiast
+            </p>
+            <p class="text-lg mb-10 leading-relaxed max-w-xl text-gray-300">
+              I am a passionate IT graduate with a focus on cybersecurity and
+              database management, dedicated to building secure and scalable
+              applications. My journey in technology is driven by a commitment
+              to excellence and a desire to make a positive impact through
+              innovative solutions.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button
+                id="view-work-btn"
+                class="px-8 py-4 bg-gradient-to-r from-blue-900 to-blue-700 text-white font-semibold !rounded-button hover:from-blue-800 hover:to-blue-600 transition-all whitespace-nowrap"
+              >
+                View My Work
+              </button>
+              <a
+                href="CV\CV.pdf"
+                download="Neo_Mphahlele_CV.pdf"
+                class="px-8 py-4 border-2 border-blue-700 text-blue-700 font-semibold !rounded-button hover:bg-blue-700 hover:text-white transition-colors whitespace-nowrap text-center"
+              >
+                Download CV
+              </a>
+            </div>
+          </div>
+          <div class="hidden lg:block">
+            <!-- ADD THIS SECTION - NEW PROFILE RING MARKUP -->
+            <div class="profile-ring-wrapper">
+              <img
+                src="pictures\Picsart_25-08-05_09-57-58-158.png"
+                alt="Neo Mphahlele"
+              />
+              <svg>
+                <circle class="animated-ring" cx="50%" cy="50%" r="49%" />
+              </svg>
+            </div>
+            <!-- END OF ADDITION -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <!-- About Section - UPDATED -->
+    <section id="about" class="py-20 glass-container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500"
+          >
+            About Me
+          </h2>
+          <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+            A passionate full stack developer with a focus on cybersecurity and
+            database management, dedicated to building secure and scalable
+            applications
+          </p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-12">
+          <!-- Left Column - Journey Text -->
+          <div class="lg:w-1/2">
+            <div class="glass-card p-8 rounded-xl mb-8">
+              <h3 class="text-2xl font-semibold text-white mb-6">My Journey</h3>
+              <p class="text-gray-300 mb-6 leading-relaxed">
+                I am a dedicated Cyber Security Intern at CAPACITI, with a
+                strong background from CTU Training Solutions. My specialties
+                include software development, database management, and
+                cybersecurity.
+              </p>
+              <p class="text-gray-300 mb-6 leading-relaxed">
+                I am skilled in coding, security practices, and database
+                management. I also thrive in teamwork, communication, and
+                problem-solving. My comprehensive skill set allows me to
+                approach challenges from multiple angles.
+              </p>
+              <p class="text-gray-300 mb-8 leading-relaxed">
+                I am committed to ongoing learning, and I thrive in fast-moving
+                environments. My passion for cybersecurity and technology drives
+                me to stay current with the latest industry trends and best
+                practices.
+              </p>
+              <a
+                href="path/to/your-cv.pdf"
+                download="Neo_Mphahlele_CV.pdf"
+                class="inline-block px-8 py-3 bg-primary text-white font-semibold !rounded-button hover:bg-secondary transition-colors whitespace-nowrap"
+              >
+                <div
+                  class="w-5 h-5 inline-flex items-center justify-center mr-2"
+                >
+                  <i class="ri-download-line"></i>
+                </div>
+                Download CV
+              </a>
+            </div>
+
+            <!-- Experience Card - Moved here -->
+            <div class="glass-card p-6 rounded-xl">
+              <h4 class="font-semibold text-white mb-2">Experience</h4>
+              <p class="text-gray-200">Cyber Security Intern at CAPACITI</p>
+              <p class="text-sm text-gray-400">Present</p>
+              <p class="text-gray-200 mt-4">
+                Systems Engineering Trainee at Enterprises University of
+                Pretoria
+              </p>
+              <p class="text-sm text-gray-400">Feb 2025</p>
+            </div>
+          </div>
+
+          <!-- Right Column - Education Timeline -->
+          <div class="lg:w-1/2">
+            <div class=" p-8 rounded-xl">
+              <h4 class="font-semibold text-white mb-8 flex items-center">
+                <div
+                  class="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center mr-3"
+                >
+                  <i class="ri-graduation-cap-line text-primary"></i>
+                </div>
+                Education Timeline
+              </h4>
+
+              <!-- UPDATED TIMELINE STRUCTURE -->
+              <div class="space-y-10 relative pl-8 border-l-2 border-blue-500">
+                <!-- NQF Level 6 -->
+                <div class="relative">
+                  <div
+                    class="absolute -left-11 top-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"
+                  >
+                    <i class="ri-shield-keyhole-line text-white"></i>
+                  </div>
+                  <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold text-white mb-2">
+                      NQF Level 6: Cyber Security & Database Development
+                    </h3>
+                    <p class="text-blue-400 mb-2">
+                      CTU Training Solutions | 2024
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                      Completed an advanced, industry-aligned programme covering
+                      software development, database administration, DevOps,
+                      project management, and cybersecurity.
+                    </p>
+                    <!-- Collapsible details -->
+                    <button
+                      class="text-blue-400 flex items-center toggle-details-btn"
+                    >
+                      Show Details <i class="ri-arrow-down-s-line ml-2"></i>
+                    </button>
+                    <div class="education-details hidden mt-4">
+                      <h4 class="font-semibold text-blue-400 mb-2">
+                        Key Learning Outcomes:
+                      </h4>
+                      <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                        <li>Designed and built database-driven systems</li>
+                        <li>Administered and secured cloud databases</li>
+                        <li>Implemented DevOps pipelines</li>
+                        <li>Applied advanced design patterns</li>
+                        <li>Conducted security operations</li>
+                        <li>Managed IT projects</li>
+                      </ul>
+                      <div class="mt-4 grid grid-cols-2 gap-2">
+                        <span class="skill-badge">Azure Security</span>
+                        <span class="skill-badge">SQL Server</span>
+                        <span class="skill-badge">Docker</span>
+                        <span class="skill-badge">Kubernetes</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- NQF Level 5 -->
+                <div class="relative">
+                  <div
+                    class="absolute -left-11 top-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"
+                  >
+                    <i class="ri-code-s-slash-line text-white"></i>
+                  </div>
+                  <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold text-white mb-2">
+                      NQF Level 5: IT Systems Development
+                    </h3>
+                    <p class="text-blue-400 mb-2">
+                      CTU Training Solutions | 2023
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                      Built a strong foundation in software development,
+                      problem-solving, and business application design.
+                    </p>
+                    <button
+                      class="text-blue-400 flex items-center toggle-details-btn"
+                    >
+                      Show Details <i class="ri-arrow-down-s-line ml-2"></i>
+                    </button>
+                    <div class="education-details hidden mt-4">
+                      <!-- Content same structure as above -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- NQF Level 4 -->
+                <div class="relative">
+                  <div
+                    class="absolute -left-11 top-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"
+                  >
+                    <i class="ri-braces-line text-white"></i>
+                  </div>
+                  <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-xl font-semibold text-white mb-2">
+                      NQF Level 4: IT Systems Development
+                    </h3>
+                    <p class="text-blue-400 mb-2">
+                      CTU Training Solutions | 2021-2022
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                      A foundational-level qualification focused on software
+                      development, programming, and IT systems management.
+                    </p>
+                    <button
+                      class="text-blue-400 flex items-center toggle-details-btn"
+                    >
+                      Show Details <i class="ri-arrow-down-s-line ml-2"></i>
+                    </button>
+                    <div class="education-details hidden mt-4">
+                      <!-- Content same structure as above -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section - UPDATED WITH NEW DESIGN -->
+    <section id="skills" class="py-20 glass-container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Skills Section Header -->
+        <div class="text-center mb-16">
+          <h2
+            class="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-500 to-gray-300"
+          >
+            Technical Skills & Expertise
+          </h2>
+          <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+            Comprehensive mastery across AI, cybersecurity, database management,
+            and full-stack development
+          </p>
+        </div>
+
+        <!-- Skill Category Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <button
+            class="skill-tab active px-6 py-3 bg-blue-400 text-white-700 !rounded-button font-medium hover:bg-gray-800 transition-colors whitespace-nowrap"
+            data-category="ai"
+          >
+            <i class="ri-cpu-line mr-2 "></i> AI & Machine Learning
+          </button >
+          
+          <button
+            class="skill-tab px-6 py-3 bg-blue-400 text-white-700 !rounded-button font-medium hover:bg-gray-800 transition-colors whitespace-nowrap"
+            data-category="cybersecurity"
+          >
+            <i class="ri-shield-keyhole-line mr-2"></i> Cybersecurity
+          </button>
+          <button
+            class="skill-tab px-6 py-3 bg-blue-400 text-white-700 !rounded-button font-medium hover:bg-gray-800 transition-colors whitespace-nowrap"
+            data-category="programming"
+          >
+            <i class="ri-code-s-slash-line mr-2"></i> Programming & Development
+          </button>
+
+          <button
+            class="skill-tab px-6 py-3 bg-blue-400 text-white-700 !rounded-button font-medium hover:bg-gray-800 transition-colors whitespace-nowrap"
+            data-category="database"
+          >
+            <i class="ri-database-2-line mr-2"></i> Database Management
+          </button>
+
+          <button
+            class="skill-tab px-6 py-3 bg-blue-400 text-white-700 !rounded-button font-medium hover:bg-gray-800 transition-colors whitespace-nowrap"
+            data-category="devops"
+          >
+            <i class="ri-cloud-line mr-2"></i> DevOps & Cloud
+          </button>
+        </div>
+
+        <!-- Skills Content -->
+        <div class=" p-8 rounded-xl">
+          <!-- AI & Machine Learning Section -->
+          <div id="ai-content" class="skill-content">
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- AI Bootcamp Card -->
+              <div class="ai-bootcamp-card glass-card rounded-xl p-6">
+                <div class="flex items-start mb-6">
+                  <div
+                    class="ai-badge w-16 h-16 bg-gradient-to-br from-purple-600 to-cyan-500 rounded-xl flex items-center justify-center mr-4"
+                  >
+                    <i class="ri-medal-fill text-2xl text-white"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">
+                      AI Bootcamp Certification
+                    </h3>
+                    <p class="text-cyan-300">Google Cloud | 2024</p>
+                  </div>
+                </div>
+
+                <p class="text-gray-300 mb-4">
+                  Intensive program covering AI fundamentals, machine learning,
+                  deep learning, and NLP with hands-on projects for real-world
+                  applications.
+                </p>
+
+                <div class="mb-6">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Key Skills Acquired:
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">Generative AI</span>
+                    <span class="skill-badge">Python & Pandas</span>
+                    <span class="skill-badge">Responsible AI</span>
+                    <span class="skill-badge">Chatbot Development</span>
+                    <span class="skill-badge">Natural Language Processing</span>
+                    <span class="skill-badge">TensorFlow & PyTorch</span>
+                    <span class="skill-badge">Computer Vision</span>
+                    <span class="skill-badge">Deep Learning</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Skills Progress -->
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  AI & ML Proficiency
+                </h3>
+
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Machine Learning</span>
+                      <span class="text-cyan-400">90%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="90%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Deep Learning</span>
+                      <span class="text-cyan-400">85%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="85%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300"
+                        >Natural Language Processing</span
+                      >
+                      <span class="text-cyan-400">88%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="88%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Computer Vision</span>
+                      <span class="text-cyan-400">82%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="82%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Tools & Technologies -->
+            <div class="mt-10">
+              <h4 class="text-2xl font-bold text-white mb-6">
+                AI Tools & Technologies
+              </h4>
+              <div
+                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+              >
+                <div class="skill-badge flex items-center justify-center py-3">
+                  <i class="ri-openai-fill text-xl mr-2 text-purple-400"></i>
+                  OpenAI
+                </div>
+                <div class="skill-badge flex items-center justify-center py-3">
+                  <i class="ri-robot-2-line text-xl mr-2 text-cyan-400"></i>
+                  TensorFlow
+                </div>
+                <div class="skill-badge flex items-center justify-center py-3">
+                  <i class="ri-brain-line text-xl mr-2 text-red-400"></i>
+                  PyTorch
+                </div>
+                <div class="skill-badge flex items-center justify-center py-3">
+                  <i class="ri-chat-3-line text-xl mr-2 text-green-400"></i>
+                  ChatGPT
+                </div>
+                <div class="skill-badge flex items-center justify-center py-3">
+                  <i
+                    class="ri-database-2-line text-xl mr-2 text-yellow-400"
+                  ></i>
+                  Pandas
+                </div>
+                <div class="skill-badge flex items-center justify-center py-3">
+                  <i class="ri-bar-chart-2-line text-xl mr-2 text-blue-400"></i>
+                  NumPy
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cybersecurity Section -->
+          <div id="cybersecurity-content" class="skill-content hidden">
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Cybersecurity Expertise
+                </h3>
+
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Security Implementation</span>
+                      <span class="text-cyan-400">95%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="95%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Incident Response</span>
+                      <span class="text-cyan-400">90%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="90%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300"
+                        >Vulnerability Assessment</span
+                      >
+                      <span class="text-cyan-400">88%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="88%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Specialized Skills
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">Azure Security</span>
+                    <span class="skill-badge">KQL Queries</span>
+                    <span class="skill-badge">Sentinel SIEM</span>
+                    <span class="skill-badge">Threat Analysis</span>
+                    <span class="skill-badge">Server Hardening</span>
+                    <span class="skill-badge">Firewall Configuration</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Security Tools & Platforms
+                </h3>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i
+                      class="ri-microsoft-fill text-2xl text-blue-400 mr-3"
+                    ></i>
+                    <span>Microsoft Azure</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i
+                      class="ri-shield-user-line text-2xl text-green-400 mr-3"
+                    ></i>
+                    <span>Defender for Endpoint</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i class="ri-eye-line text-2xl text-purple-400 mr-3"></i>
+                    <span>Azure Sentinel</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i class="ri-server-line text-2xl text-cyan-400 mr-3"></i>
+                    <span>Active Directory</span>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Achievements
+                  </h4>
+                  <div class="space-y-3">
+                    <div class="flex items-center">
+                      <i class="ri-medal-line text-cyan-400 mr-3"></i>
+                      <span>Azure Security Engineer</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="ri-medal-line text-cyan-400 mr-3"></i>
+                      <span>Security Operations Analyst</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Programming & Development Section -->
+          <div id="programming-content" class="skill-content hidden">
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Programming Languages
+                </h3>
+
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Python</span>
+                      <span class="text-cyan-400">92%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="92%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Java</span>
+                      <span class="text-cyan-400">88%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="88%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">C#</span>
+                      <span class="text-cyan-400">90%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="90%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">JavaScript</span>
+                      <span class="text-cyan-400">85%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="85%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Development Expertise
+                </h3>
+
+                <div class="mb-6">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Full Stack Development
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">HTML/CSS</span>
+                    <span class="skill-badge">JavaScript</span>
+                    <span class="skill-badge">React</span>
+                    <span class="skill-badge">Node.js</span>
+                    <span class="skill-badge">RESTful APIs</span>
+                  </div>
+                </div>
+
+                <div class="mb-6">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Software Development
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">OOP Principles</span>
+                    <span class="skill-badge">Design Patterns</span>
+                    <span class="skill-badge">SDLC</span>
+                    <span class="skill-badge">Debugging</span>
+                    <span class="skill-badge">Testing</span>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Development Tools
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">Visual Studio</span>
+                    <span class="skill-badge">IntelliJ IDEA</span>
+                    <span class="skill-badge">Git & GitHub</span>
+                    <span class="skill-badge">Docker</span>
+                    <span class="skill-badge">Jira</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Database Management Section -->
+          <div id="database-content" class="skill-content hidden">
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Database Expertise
+                </h3>
+
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">SQL Server</span>
+                      <span class="text-cyan-400">92%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="92%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Azure SQL</span>
+                      <span class="text-cyan-400">88%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="88%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Data Modeling</span>
+                      <span class="text-cyan-400">90%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="90%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Database Skills
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">Database Administration</span>
+                    <span class="skill-badge">ETL Processes</span>
+                    <span class="skill-badge">Query Optimization</span>
+                    <span class="skill-badge">Data Warehousing</span>
+                    <span class="skill-badge">Backup & Recovery</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Database Tools & Technologies
+                </h3>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i
+                      class="ri-microsoft-fill text-2xl text-blue-400 mr-3"
+                    ></i>
+                    <span>SQL Server</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i class="ri-cloud-line text-2xl text-green-400 mr-3"></i>
+                    <span>Azure SQL</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i
+                      class="ri-database-2-line text-2xl text-purple-400 mr-3"
+                    ></i>
+                    <span>SSIS</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i
+                      class="ri-bar-chart-line text-2xl text-cyan-400 mr-3"
+                    ></i>
+                    <span>Power BI</span>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Certifications
+                  </h4>
+                  <div class="space-y-3">
+                    <div class="flex items-center">
+                      <i class="ri-medal-line text-cyan-400 mr-3"></i>
+                      <span>Azure Database Admin</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="ri-medal-line text-cyan-400 mr-3"></i>
+                      <span>SQL Server Certified</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DevOps & Cloud Section -->
+          <div id="devops-content" class="skill-content hidden">
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  DevOps & Cloud
+                </h3>
+
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Azure DevOps</span>
+                      <span class="text-cyan-400">90%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="90%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">CI/CD Pipelines</span>
+                      <span class="text-cyan-400">88%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="88%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-gray-300">Containerization</span>
+                      <span class="text-cyan-400">85%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        class="progress-fill"
+                        style="width: 0%"
+                        data-width="85%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    DevOps Skills
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">Infrastructure as Code</span>
+                    <span class="skill-badge">Kubernetes</span>
+                    <span class="skill-badge">Automation Scripting</span>
+                    <span class="skill-badge">Monitoring & Logging</span>
+                    <span class="skill-badge">Cloud Security</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-white mb-6">
+                  Cloud Platforms & Tools
+                </h3>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i
+                      class="ri-microsoft-fill text-2xl text-blue-400 mr-3"
+                    ></i>
+                    <span>Microsoft Azure</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i class="ri-docker-line text-2xl text-cyan-400 mr-3"></i>
+                    <span>Docker</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i class="ri-ship-line text-2xl text-purple-400 mr-3"></i>
+                    <span>Kubernetes</span>
+                  </div>
+                  <div class="p-4 bg-gray-800/50 rounded-lg flex items-center">
+                    <i
+                      class="ri-git-branch-line text-2xl text-green-400 mr-3"
+                    ></i>
+                    <span>Azure DevOps</span>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h4 class="text-xl font-semibold text-white mb-4">
+                    Methodologies
+                  </h4>
+                  <div class="flex flex-wrap gap-3">
+                    <span class="skill-badge">Agile Development</span>
+                    <span class="skill-badge">Scrum</span>
+                    <span class="skill-badge">Infrastructure as Code</span>
+                    <span class="skill-badge">Continuous Deployment</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Skills -->
+        <div class="mt-16  p-8 rounded-xl">
+          <div class="flex items-center mb-8">
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-xl flex items-center justify-center mr-4"
+            >
+              <i class="ri-user-line text-2xl text-white"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-white">Professional Skills</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center"
+              >
+                <i class="ri-lightbulb-flash-line text-2xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">Problem Solving</h3>
+              <p class="text-gray-300">
+                Analytical approach to complex challenges
+              </p>
+            </div>
+
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center"
+              >
+                <i class="ri-team-line text-2xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">
+                Team Collaboration
+              </h3>
+              <p class="text-gray-300">Effective communication and teamwork</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center"
+              >
+                <i class="ri-time-line text-2xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">Time Management</h3>
+              <p class="text-gray-300">Efficient prioritization of tasks</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 flex items-center justify-center"
+              >
+                <i class="ri-brain-line text-2xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">
+                Critical Thinking
+              </h3>
+              <p class="text-gray-300">Strategic analysis of problems</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: Certifications Section -->
+    <section id="certifications" class="py-20 glass-container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-500 to-gray-300"
+          >
+            Certifications & Achievements
+          </h2>
+          <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+            Professional certifications and achievements that validate my
+            expertise
+          </p>
+        </div>
+
+        <div
+          class="flex flex-wrap justify-center gap-4 mb-12"
+          id="cert-filter-buttons"
+        >
+          <button
+            class="cert-filter-btn px-6 py-2 bg-primary text-white !rounded-button font-medium whitespace-nowrap"
+            data-filter="all"
+          >
+            All Certifications
+          </button>
+          <button
+            class="cert-filter-btn px-6 py-2 bg-gray-200 text-gray-700 !rounded-button font-medium hover:bg-gray-300 transition-colors whitespace-nowrap"
+            data-filter="programming"
+          >
+            Programming Languages
+          </button>
+          <button
+            class="cert-filter-btn px-6 py-2 bg-gray-200 text-gray-700 !rounded-button font-medium hover:bg-gray-300 transition-colors whitespace-nowrap"
+            data-filter="cloud"
+          >
+            Cloud and Security
+          </button>
+          <button
+            class="cert-filter-btn px-6 py-2 bg-gray-200 text-gray-700 !rounded-button font-medium hover:bg-gray-300 transition-colors whitespace-nowrap"
+            data-filter="database"
+          >
+            Database Administration
+          </button>
+        </div>
+
+        <!-- Programming and Development Block -->
+        <div class="mb-12 cert-category-section" id="programming-section">
+          <div class="category-header">
+            <h2 class="text-3xl font-semibold text-white">
+              Programming and Development
+            </h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- JavaScript Certification -->
+            <div class="certification-card" data-category="programming">
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4"
+                  >
+                    <i class="ri-javascript-line text-blue-400 text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-white">
+                    Microsoft Technology Associate: JavaScript
+                  </h3>
+                </div>
+
+                <p class="text-gray-400">Issued: October 15, 2021</p>
+                <p class="mt-2 text-gray-300">
+                  Proficiency in JavaScript for building dynamic, interactive
+                  web applications.
+                </p>
+                <div class="mt-4 flex justify-between">
+                  <a
+                    href="https://verifycertport.com/Fh7z-XMRR"
+                    class="text-blue-400 hover:underline"
+                    target="_blank"
+                    >Verify</a
+                  >
+                  <button
+                    class="view-cert-btn text-blue-400 hover:text-blue-300 transition-colors"
+                    data-title="Microsoft Technology Associate: JavaScript"
+                    data-issuer="Microsoft"
+                    data-date="Issued: October 15, 2021"
+                    data-verify="https://verifycertport.com/Fh7z-XMRR"
+                    data-image="certifications\javascriptCert.png"
+                  >
+                    View Certification
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- HTML and CSS Certification -->
+            <div class="certification-card" data-category="programming">
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4"
+                  >
+                    <i class="ri-html5-line text-blue-400 text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-white">
+                    Microsoft Technology Associate: HTML and CSS
+                  </h3>
+                </div>
+
+                <p class="text-gray-400">Issued: October 7, 2021</p>
+                <p class="mt-2 text-gray-300">
+                  Expertise in creating responsive, accessible web interfaces
+                  using HTML and CSS.
+                </p>
+                <div class="mt-4 flex justify-between">
+                  <a
+                    href="https://verifycertport.com/wayU3-H9ad"
+                    class="text-blue-400 hover:underline"
+                    target="_blank"
+                    >Verify</a
+                  >
+                  <button
+                    class="view-cert-btn text-blue-400 hover:text-blue-300 transition-colors"
+                    data-title="Microsoft Technology Associate: HTML and CSS"
+                    data-issuer="Microsoft"
+                    data-date="Issued: October 7, 2021"
+                    data-verify="https://verifycertport.com/wayU3-H9ad"
+                    data-image="certifications\HTMLCSScert.png"
+                  >
+                    View Certification
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Systems Development Certification -->
+            <div class="certification-card" data-category="programming">
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4"
+                  >
+                    <i class="ri-settings-5-line text-blue-400 text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-white">
+                    FETC: Information Technology: Systems Development
+                  </h3>
+                </div>
+
+                <p class="text-gray-400">Issued: February 28, 2022</p>
+                <p class="mt-2 text-gray-300">
+                  Competence in full-stack development and IT project management
+                  (NQF Level 4).
+                </p>
+                <div class="mt-4 flex justify-between">
+                  <span class="text-blue-400">Contact MICT Seta</span>
+                  <button
+                    class="view-cert-btn text-blue-400 hover:text-blue-300 transition-colors"
+                    data-title="FETC: Information Technology: Systems Development"
+                    data-issuer="MICT Seta"
+                    data-date="Issued: February 28, 2022"
+                    data-verify=""
+                    data-image="certifications\tinywow_NationalCert4_83143760_1.jpg"
+                  >
+                    View Certification
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloud and Security Block -->
+        <div class="mb-12 cert-category-section" id="cloud-section">
+          <div class="category-header">
+            <h2 class="text-3xl font-semibold text-white">
+              Cloud and Security
+            </h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Azure Security Technologies -->
+            <div class="certification-card" data-category="cloud">
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4"
+                  >
+                    <i class="ri-shield-keyhole-line text-blue-400 text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-white">
+                    Microsoft Azure Security Technologies
+                  </h3>
+                </div>
+
+                <p class="text-gray-400">Issued: 2024</p>
+                <p class="mt-2 text-gray-300">
+                  Expertise in securing Azure environments and implementing
+                  security controls.
+                </p>
+                <div class="mt-4 flex justify-between">
+                  <a
+                    href="https://learn.microsoft.com/en-us/certifications/azure-security-engineer-associate/"
+                    class="text-blue-400 hover:underline"
+                    target="_blank"
+                    >Learn More</a
+                  >
+                  <button
+                    class="view-cert-btn text-blue-400 hover:text-blue-300 transition-colors"
+                    data-title="Microsoft Azure Security Technologies"
+                    data-issuer="Microsoft"
+                    data-date="Issued: 2024"
+                    data-verify="https://learn.microsoft.com/en-us/certifications/azure-security-engineer-associate/"
+                    data-image="certifications\tinywow_Az500_83144044_1.jpg"
+                  >
+                    View Certification
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Security Operations Analyst -->
+            <div class="certification-card" data-category="cloud">
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4"
+                  >
+                    <i class="ri-shield-star-line text-blue-400 text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-white">
+                    Microsoft Security Operations Analyst
+                  </h3>
+                </div>
+
+                <p class="text-gray-400">Issued: October 17, 2024</p>
+                <p class="mt-2 text-gray-300">
+                  Proficiency in threat detection and incident response using
+                  Azure Sentinel.
+                </p>
+                <div class="mt-4 flex justify-between">
+                  <a
+                    href="https://learn.microsoft.com/en-us/certifications/security-operations-analyst-associate/"
+                    class="text-blue-400 hover:underline"
+                    target="_blank"
+                    >Learn More</a
+                  >
+                  <button
+                    class="view-cert-btn text-blue-400 hover:text-blue-300 transition-colors"
+                    data-title="Microsoft Security Operations Analyst"
+                    data-issuer="Microsoft"
+                    data-date="Issued: October 17, 2024"
+                    data-verify="https://learn.microsoft.com/en-us/certifications/security-operations-analyst-associate/"
+                    data-image="certifications\SecurityOperationsAnalystcert.png"
+                  >
+                    View Certification
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Database Administration Block -->
+        <div class="mb-12 cert-category-section" id="database-section">
+          <div class="category-header">
+            <h2 class="text-3xl font-semibold text-white">
+              Database Administration
+            </h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Azure Database Administrator Associate -->
+            <div class="certification-card" data-category="database">
+              <div class="p-6">
+                <div class="flex items-center mb-4">
+                  <div
+                    class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4"
+                  >
+                    <i class="ri-cloud-line text-blue-400 text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-semibold text-white">
+                    Microsoft Certified: Azure Database Administrator Associate
+                  </h3>
+                </div>
+
+                <p class="text-gray-400">Issued: 2024</p>
+                <p class="mt-2 text-gray-300">
+                  Expertise in managing and optimizing Azure database solutions.
+                </p>
+                <div class="mt-4 flex justify-between">
+                  <a
+                    href="https://learn.microsoft.com/en-us/certifications/azure-database-administrator-associate/"
+                    class="text-blue-400 hover:underline"
+                    target="_blank"
+                    >Learn More</a
+                  >
+                  <button
+                    class="view-cert-btn text-blue-400 hover:text-blue-300 transition-colors"
+                    data-title="Azure Database Administrator Associate"
+                    data-issuer="Microsoft"
+                    data-date="Issued: 2024"
+                    data-verify="https://learn.microsoft.com/en-us/certifications/azure-database-administrator-associate/"
+                    data-image="certifications\AzureDatabaseAdministrator.png"
+                  >
+                    View Certification
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievement Badges -->
+        <div class="mt-16">
+          <div class="flex items-center mb-8">
+            <div
+              class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center mr-4"
+            >
+              <i class="ri-medal-2-line text-primary text-2xl"></i>
+            </div>
+            <h2 class="text-3xl font-semibold text-white">
+              Achievement Badges
+            </h2>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center floating-badge"
+              >
+                <i class="ri-code-s-slash-line text-3xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">Code Mastery</h3>
+              <p class="text-gray-300">Advanced programming skills</p>
+            </div>
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center floating-badge"
+              >
+                <i class="ri-shield-check-line text-3xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">Security Expert</h3>
+              <p class="text-gray-300">Cybersecurity specialist</p>
+            </div>
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-yellow-500 to-orange-600 flex items-center justify-center floating-badge"
+              >
+                <i class="ri-cloud-line text-3xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">Cloud Architect</h3>
+              <p class="text-gray-300">Azure cloud solutions</p>
+            </div>
+            <div class="glass-card p-6 rounded-xl text-center">
+              <div
+                class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center floating-badge"
+              >
+                <i class="ri-database-2-line text-3xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-semibold text-white">DB Specialist</h3>
+              <p class="text-gray-300">Database management expert</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 glass-container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-500 to-gray-300"
+          >
+            Featured Projects
+          </h2>
+          <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+            A showcase of my recent work spanning web development, AI, and
+            full-stack applications
+          </p>
+        </div>
+        <div
+          class="flex flex-wrap justify-center gap-4 mb-12"
+          id="project-filter-buttons"
+        >
+          <button
+            class="project-filter-btn px-6 py-2 bg-primary text-white !rounded-button font-medium whitespace-nowrap"
+            data-filter="all"
+          >
+            All Projects
+          </button>
+          <button
+            class="project-filter-btn px-6 py-2 bg-gray-200 text-gray-700 !rounded-button font-medium hover:bg-gray-300 transition-colors whitespace-nowrap"
+            data-filter="frontend"
+          >
+            Frontend
+          </button>
+          <button
+            class="project-filter-btn px-6 py-2 bg-gray-200 text-gray-700 !rounded-button font-medium hover:bg-gray-300 transition-colors whitespace-nowrap"
+            data-filter="fullstack"
+          >
+            Full Stack
+          </button>
+          <button
+            class="project-filter-btn px-6 py-2 bg-gray-200 text-gray-700 !rounded-button font-medium hover:bg-gray-300 transition-colors whitespace-nowrap"
+            data-filter="ai"
+          >
+            AI/ML
+          </button>
+        </div>
+
+        <div
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          id="projects-grid"
+        >
+          <!-- ResumeCraft AI Builder -->
+          <div
+            class="project-card glass-card rounded-xl overflow-hidden"
+            data-category="fullstack"
+          >
+            <div class="overflow-hidden">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%20resume%20builder%20application%20interface%20displayed%20on%20laptop%20screen%2C%20modern%20UI%20with%20clean%20layout%20showing%20resume%20templates%2C%20real-time%20preview%20panel%2C%20ATS%20scoring%20dashboard%2C%20smart%20content%20suggestions%20interface%2C%20elegant%20blue%20and%20white%20color%20scheme%20with%20professional%20typography&width=600&height=400&seq=resume-builder&orientation=landscape"
+                alt="Resume Builder Platform"
+                class="w-full h-48 object-cover object-top project-image"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-white mb-2">
+                ResumeCraft AI Builder
+              </h3>
+              <p class="text-gray-300 mb-4">
+                An intelligent resume builder that helps you create
+                professional, ATS-friendly resumes with ease. Features smart
+                suggestions, real-time previews, and ATS compatibility scoring.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                  >HTML5</span
+                >
+                <span
+                  class="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded-full"
+                  >CSS3</span
+                >
+                <span
+                  class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full"
+                  >JavaScript</span
+                >
+                <span
+                  class="px-3 py-1 bg-teal-100 text-teal-800 text-sm rounded-full"
+                  >Tailwind CSS</span
+                >
+                <span
+                  class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full"
+                  >OpenRouter AI</span
+                >
+              </div>
+              <div class="flex gap-3">
+                <a
+                  href="https://ai-resume-generator-l82k.vercel.app/test_deepseek_code.html"
+                  class="flex items-center text-primary hover:text-secondary transition-colors"
+                >
+                  <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-external-link-line"></i>
+                  </div>
+                  Live Demo
+                </a>
+                <a
+                  href="https://github.com/Neo-Cyphers/AIResumeGenerator?tab=readme-ov-file"
+                  class="flex items-center text-gray-300 hover:text-white transition-colors"
+                >
+                  <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-github-line"></i>
+                  </div>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Sentiment Analytics Dashboard -->
+          <div
+            class="project-card glass-card rounded-xl overflow-hidden"
+            data-category="ai"
+          >
+            <div class="overflow-hidden">
+              <img
+                src="https://readdy.ai/api/search-image?query=Sentiment%20analysis%20dashboard%20interface%20showing%20emotional%20analysis%20charts%2C%20text%20processing%20visualization%2C%20word%20clouds%20and%20sentiment%20graphs%2C%20modern%20dark%20UI%20with%20blue%20accents%2C%20professional%20NLP%20application%20interface%20with%20clean%20typography%20and%20data%20visualization&width=600&height=400&seq=sentiment-dashboard&orientation=landscape"
+                alt="Sentiment Explorer Dashboard"
+                class="w-full h-48 object-cover object-top project-image"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-white mb-2">
+                Sentiment Explorer Dashboard
+              </h3>
+              <p class="text-gray-300 mb-4">
+                Advanced sentiment analysis platform using VADER and Hugging
+                Face models for emotional tone analysis with interactive
+                visualizations and keyword extraction.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                  >Streamlit</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full"
+                  >Pandas</span
+                >
+                <span
+                  class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full"
+                  >Plotly</span
+                >
+                <span
+                  class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full"
+                  >WordCloud</span
+                >
+                <span
+                  class="px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full"
+                  >Matplotlib</span
+                >
+              </div>
+              <div class="flex gap-3">
+                <a
+                  href="https://sentimentanalysisdashboard-ds09.onrender.com/"
+                  class="flex items-center text-primary hover:text-secondary transition-colors"
+                >
+                  <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-external-link-line"></i>
+                  </div>
+                  Live Demo
+                </a>
+                <a
+                  href="https://github.com/Neo-Cyphers/SentimentAnalysisDashboard?tab=readme-ov-file"
+                  class="flex items-center text-gray-300 hover:text-white transition-colors"
+                >
+                  <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-github-line"></i>
+                  </div>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Educational Chatbot -->
+          <div
+            class="project-card glass-card rounded-xl overflow-hidden"
+            data-category="frontend"
+          >
+            <div class="overflow-hidden">
+              <img
+                src="pictures\AIchatbot.jpg"
+                alt="AI Educational Chatbot"
+                class="w-full h-48 object-cover object-top project-image"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold text-white mb-2">
+                AI Educational Chatbot
+              </h3>
+              <p class="text-gray-300 mb-4">
+                Interactive chatbot designed to help beginners understand AI
+                fundamentals through structured learning paths and engaging
+                conversations.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                  >Landbot</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full"
+                  >HTML/CSS</span
+                >
+                <span
+                  class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full"
+                  >Markdown</span
+                >
+                <span
+                  class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full"
+                  >Q&A Logic</span
+                >
+              </div>
+              <div class="flex gap-3">
+                <a
+                  href="https://landbot.online/v3/H-2940004-ETNXFGXUQRF2NMW0/index.html"
+                  class="flex items-center text-primary hover:text-secondary transition-colors"
+                >
+                  <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-external-link-line"></i>
+                  </div>
+                  Live Demo
+                </a>
+                <a
+                  href="https://github.com/Neo-Cyphers/FundiChatBot"
+                  class="flex items-center text-gray-300 hover:text-white transition-colors"
+                >
+                  <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-github-line"></i>
+                  </div>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 glass-container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-500 to-gray-300"
+          >
+            Get In Touch
+          </h2>
+          <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+            Ready to start your next project? Let's discuss how we can work
+            together to bring your ideas to life.
+          </p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12">
+          <div>
+            <h3 class="text-2xl font-semibold text-white mb-6">
+              Let's Connect
+            </h3>
+            <div class="space-y-6">
+              <div class="flex items-center">
+                <div
+                  class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4"
+                >
+                  <i class="ri-mail-line text-primary"></i>
+                </div>
+                <div>
+                  <p class="font-medium text-white">Email</p>
+                  <p class="text-gray-300">Lesegokota287@gmail.com</p>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4"
+                >
+                  <i class="ri-phone-line text-primary"></i>
+                </div>
+                <div>
+                  <p class="font-medium text-white">Phone</p>
+                  <p class="text-gray-300">0665779462</p>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4"
+                >
+                  <i class="ri-map-pin-line text-primary"></i>
+                </div>
+                <div>
+                  <p class="font-medium text-white">Location</p>
+                  <p class="text-gray-300">Johannesburg, South Africa</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8">
+              <h4 class="font-semibold text-gray-300 mb-4">Follow Me</h4>
+              <div class="flex space-x-4">
+                <a
+                  href="https://www.linkedin.com/in/neo-mphahlele-2830a3290"
+                  target="_blank"
+                  class="w-10 h-10 bg-primary text-white rounded-lg flex items-center justify-center hover:bg-secondary transition-colors"
+                >
+                  <i class="ri-linkedin-line"></i>
+                </a>
+                <a
+                  href="https://github.com/Neo-Cyphers"
+                  target="_blank"
+                  class="w-10 h-10 bg-gray-800 text-white rounded-lg flex items-center justify-center hover:bg-gray-900 transition-colors"
+                >
+                  <i class="ri-github-line"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <!-- Contact Form -->
+            <form
+              id="contact-form"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              class="space-y-6"
+            >
+              <!-- Web3Forms requires these hidden fields -->
+              <!-- REPLACE 'YOUR_ACCESS_KEY_HERE' WITH YOUR ACTUAL KEY FROM WEB3FORMS -->
+              <input
+                type="hidden"
+                name="access_key"
+                value="e477386c-f722-4f0e-b8d0-6f49f4cf3e2f"
+              />
+              <input
+                type="hidden"
+                name="subject"
+                value="New Message from Portfolio Website"
+              />
+              <input
+                type="hidden"
+                name="from_name"
+                value="Neo Mphahlele Portfolio"
+              />
+              <input type="checkbox" name="botcheck" style="display: none" />
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label for="name" class="contact-label">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    class="contact-input"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label for="email" class="contact-label">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="contact-input"
+                    placeholder="Your email"
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="subject" class="contact-label">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  required
+                  class="contact-input"
+                  placeholder="Subject"
+                />
+              </div>
+              <div>
+                <label for="message" class="contact-label">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="6"
+                  required
+                  class="contact-input"
+                  placeholder="Your message"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full px-8 py-4 bg-primary text-white font-semibold !rounded-button hover:bg-secondary transition-colors whitespace-nowrap"
+              >
+                Send Message
+              </button>
+            </form>
+            <div id="form-message" class="hidden"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== START: NEW CONFIRMATION POPUP ===== -->
+    <div class="popup-overlay" id="popup-overlay">
+      <div class="confirmation-popup" id="confirmation-popup">
+        <h3>Message Sent Successfully!</h3>
+        <p>
+          Thank you for reaching out. I'll get back to you as soon as possible.
+        </p>
+        <button id="close-popup" class="close-btn">Close</button>
+      </div>
+    </div>
+    <!-- ===== END: NEW CONFIRMATION POPUP ===== -->
+
+    <!-- Certification View Modal -->
+    <div class="cert-modal-overlay" id="cert-modal-overlay">
+      <div class="cert-modal-content" id="cert-modal-content">
+        <button id="close-cert-modal" class="cert-modal-close-btn">
+          <i class="ri-close-line"></i>
+        </button>
+        <div class="cert-modal-header">
+          <h3 id="cert-modal-title" class="text-2xl font-bold text-white"></h3>
+          <p id="cert-modal-issuer" class="text-gray-300"></p>
+        </div>
+        <div class="cert-modal-body">
+          <img
+            id="cert-modal-image"
+            src=""
+            alt="Certification"
+            class="cert-modal-image"
+          />
+        </div>
+        <div class="cert-modal-footer">
+          <p id="cert-modal-date" class="text-gray-400 text-sm"></p>
+          <a
+            id="cert-modal-verify"
+            href="#"
+            target="_blank"
+            class="text-blue-400 hover:text-blue-300 text-sm"
+          >
+            Verify Certification <i class="ri-external-link-line ml-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8 border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center">
+          <h3 class="text-xl font-bold mb-4">Neo Mphahlele</h3>
+          <div class="flex space-x-6 mb-6">
+            <a
+              href="https://www.linkedin.com/in/neo-mphahlele-2830a3290"
+              target="_blank"
+              class="text-gray-400 hover:text-white transition-colors"
+            >
+              <div class="w-6 h-6 flex items-center justify-center">
+                <i class="ri-linkedin-line"></i>
+              </div>
+            </a>
+            <a
+              href="https://github.com/Neo-Cyphers"
+              target="_blank"
+              class="text-gray-400 hover:text-white transition-colors"
+            >
+              <div class="w-6 h-6 flex items-center justify-center">
+                <i class="ri-github-line"></i>
+              </div>
+            </a>
+          </div>
+          <p class="text-gray-400 text-center">
+            &copy; 2025 Neo Mphahlele. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Preloader
+        const preloader = document.getElementById("preloader");
+        setTimeout(() => {
+          preloader.classList.add("hidden");
+        }, 1500);
+
+        // ====== NEW: ANIMATED HAMBURGER MENU ======
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuToggle.addEventListener("click", function () {
+          this.classList.toggle("open");
+          mobileMenu.classList.toggle("hidden");
+        });
+
+        // Navigation
+        const navLinks = document.querySelectorAll('a[href^="#"]');
+        navLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+              targetSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+            mobileMenu.classList.add("hidden");
+            mobileMenuToggle.classList.remove("open");
+          });
+        });
+
+        // View work button
+        const viewWorkBtn = document.getElementById("view-work-btn");
+        viewWorkBtn.addEventListener("click", function () {
+          const projectsSection = document.getElementById("projects");
+          if (projectsSection) {
+            projectsSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+
+        // Active nav link based on scroll position
+        const sections = document.querySelectorAll("section");
+        const navLinksArray = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+          let current = "";
+
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+
+            if (scrollY >= sectionTop - sectionHeight / 3) {
+              current = section.getAttribute("id");
+            }
+          });
+
+          navLinksArray.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href").includes(current)) {
+              link.classList.add("active");
+            }
+          });
+        });
+
+        // Project filtering
+        const projectFilterButtons = document.querySelectorAll(
+          ".project-filter-btn"
+        );
+        const projectCards = document.querySelectorAll(".project-card");
+
+        projectFilterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const filter = this.getAttribute("data-filter");
+
+            // Update active button
+            projectFilterButtons.forEach((btn) => {
+              btn.classList.remove("bg-primary", "text-white");
+              btn.classList.add("bg-gray-200", "text-gray-700");
+            });
+            this.classList.remove("bg-gray-200", "text-gray-700");
+            this.classList.add("bg-primary", "text-white");
+
+            // Filter projects
+            projectCards.forEach((card) => {
+              if (
+                filter === "all" ||
+                card.getAttribute("data-category") === filter
+              ) {
+                card.style.display = "block";
+              } else {
+                card.style.display = "none";
+              }
+            });
+          });
+        });
+
+        // ====== NEW: SKILLS SECTION FUNCTIONALITY ======
+        
+          // Skill tabs functionality
+          
+    const skillTabs = document.querySelectorAll(".skill-tab");
+        const skillContents = document.querySelectorAll(".skill-content");
+
+        skillTabs.forEach((tab) => {
+          tab.addEventListener("click", function () {
+            const category = this.getAttribute("data-category");
+
+            // Update active tab
+            skillTabs.forEach((t) => t.classList.remove("active"));
+            this.classList.add("active");
+
+            // Show relevant content
+            skillContents.forEach((content) => {
+              content.classList.add("hidden");
+              if (content.id === `${category}-content`) {
+                content.classList.remove("hidden");
+              }
+            });
+          });
+        });
+
+        // Animate progress bars when in view
+        const progressBars = document.querySelectorAll(".progress-fill");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const width = entry.target.getAttribute("data-width");
+                entry.target.style.width = width;
+              }
+            });
+          },
+          { threshold: 0.5 }
+        );
+
+        progressBars.forEach((bar) => {
+          observer.observe(bar);
+        });
+        
+
+        // ====== NEW: CONTACT FORM SUBMISSION WITH POPUP ======
+
+        // Contact form submission
+        document.addEventListener("DOMContentLoaded", function () {
+          const contactForm = document.getElementById("contact-form");
+          const formMessage = document.getElementById("form-message");
+          const confirmationPopup =
+            document.getElementById("confirmation-popup");
+          const popupOverlay = document.getElementById("popup-overlay");
+          const closePopupBtn = document.getElementById("close-popup");
+
+          contactForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // Disable the submit button to prevent multiple submissions
+            const submitButton = contactForm.querySelector(
+              'button[type="submit"]'
+            );
+            const originalButtonText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+
+            // Hide any previous error messages
+            formMessage.classList.add("hidden");
+
+            try {
+              // Get form data
+              const formData = new FormData(contactForm);
+
+              // Send form data to Web3Forms
+              const response = await fetch(contactForm.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                  Accept: "application/json",
+                },
+              });
+
+              const result = await response.json();
+
+              if (result.success) {
+                // Show confirmation popup with animation
+                confirmationPopup.classList.add("show");
+                popupOverlay.classList.add("show");
+
+                // Reset the form
+                contactForm.reset();
+              } else {
+                throw new Error(result.message || "Form submission failed");
+              }
+            } catch (error) {
+              // Show error message
+              formMessage.textContent =
+                "Oops! Something went wrong. Please try again.";
+              formMessage.className = "bg-red-900";
+              formMessage.classList.remove("hidden");
+              console.error("Form submission error:", error);
+            } finally {
+              // Re-enable the submit button
+              submitButton.disabled = false;
+              submitButton.textContent = originalButtonText;
+            }
+          });
+
+          // Close popup functionality
+          closePopupBtn.addEventListener("click", function () {
+            confirmationPopup.classList.remove("show");
+            popupOverlay.classList.remove("show");
+          });
+
+          popupOverlay.addEventListener("click", function () {
+            confirmationPopup.classList.remove("show");
+            popupOverlay.classList.remove("show");
+          });
+
+          // Close popup when pressing Escape key
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+              confirmationPopup.classList.remove("show");
+              popupOverlay.classList.remove("show");
+            }
+          });
+        });
+
+        // ====== NEW: DARK/LIGHT MODE TOGGLE ======
+          const themeToggle = document.getElementById("theme-toggle");
+        const themeIcon = themeToggle.querySelector("i");
+
+        themeToggle.addEventListener("click", function () {
+          const isDark = document.body.classList.toggle("light-mode");
+
+          if (isDark) {
+            themeIcon.className = "ri-sun-line";
+          } else {
+            themeIcon.className = "ri-moon-line";
+          }
+        });
+
+        // Certification modal functionality
+        // NEW: Certification filtering
+        const certFilterButtons = document.querySelectorAll(
+          "#cert-filter-buttons .cert-filter-btn"
+        );
+        const certCards = document.querySelectorAll(".certification-card");
+        const certCategorySections = document.querySelectorAll(
+          ".cert-category-section"
+        );
+
+        certFilterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const filter = this.getAttribute("data-filter");
+
+            // Update active button
+            certFilterButtons.forEach((btn) => {
+              btn.classList.remove("bg-primary", "text-white");
+              btn.classList.add("bg-gray-200", "text-gray-700");
+            });
+            this.classList.remove("bg-gray-200", "text-gray-700");
+            this.classList.add("bg-primary", "text-white");
+
+            // Handle category sections visibility
+            if (filter === "all") {
+              // Show all category sections
+              certCategorySections.forEach((section) => {
+                section.style.display = "block";
+                section.style.opacity = "1";
+                section.style.transform = "translateY(0)";
+              });
+
+              // Show all certification cards
+              certCards.forEach((card) => {
+                card.style.display = "block";
+              });
+            } else {
+              // Hide all category sections first
+              certCategorySections.forEach((section) => {
+                section.style.display = "none";
+                section.style.opacity = "0";
+                section.style.transform = "translateY(20px)";
+              });
+
+              // Show the selected category section
+              const selectedSection = document.getElementById(
+                `${filter}-section`
+              );
+              if (selectedSection) {
+                selectedSection.style.display = "block";
+                setTimeout(() => {
+                  selectedSection.style.opacity = "1";
+                  selectedSection.style.transform = "translateY(0)";
+                }, 10);
+              }
+
+              // Show only cards in selected category
+              certCards.forEach((card) => {
+                if (card.getAttribute("data-category") === filter) {
+                  card.style.display = "block";
+                } else {
+                  card.style.display = "none";
+                }
+              });
+            }
+
+            // Scroll to section
+            document.getElementById("certifications").scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          });
+        });
+
+        // NEW: Certification modal functionality
+        const certModalOverlay = document.getElementById("cert-modal-overlay");
+        const closeCertModal = document.getElementById("close-cert-modal");
+        const certModalTitle = document.getElementById("cert-modal-title");
+        const certModalIssuer = document.getElementById("cert-modal-issuer");
+        const certModalImage = document.getElementById("cert-modal-image");
+        const certModalDate = document.getElementById("cert-modal-date");
+        const certModalVerify = document.getElementById("cert-modal-verify");
+
+        // View certification buttons
+        document.querySelectorAll(".view-cert-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const title = this.getAttribute("data-title");
+            const issuer = this.getAttribute("data-issuer");
+            const date = this.getAttribute("data-date");
+            const verifyUrl = this.getAttribute("data-verify");
+            const imageUrl = this.getAttribute("data-image");
+
+            certModalTitle.textContent = title;
+            certModalIssuer.textContent = `Issued by: ${issuer}`;
+            certModalDate.textContent = date;
+            certModalVerify.href = verifyUrl;
+            certModalImage.src = imageUrl;
+
+            certModalOverlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+          });
+        });
+
+        // Close certification modal
+        closeCertModal.addEventListener("click", function () {
+          certModalOverlay.classList.remove("active");
+          document.body.style.overflow = "";
+        });
+
+        certModalOverlay.addEventListener("click", function (e) {
+          if (e.target === certModalOverlay) {
+            certModalOverlay.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener("keydown", function (e) {
+          if (
+            e.key === "Escape" &&
+            certModalOverlay.classList.contains("active")
+          ) {
+            certModalOverlay.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        });
+
+        // ====== NEW: EDUCATION DETAILS TOGGLE ======
+        document.querySelectorAll(".toggle-details-btn").forEach((button) => {
+          button.addEventListener("click", function () {
+            const details = this.nextElementSibling;
+            const icon = this.querySelector("i");
+
+            details.classList.toggle("hidden");
+
+            if (details.classList.contains("hidden")) {
+              this.innerHTML =
+                'Show Details <i class="ri-arrow-down-s-line ml-2"></i>';
+            } else {
+              this.innerHTML =
+                'Hide Details <i class="ri-arrow-up-s-line ml-2"></i>';
+            }
+          
+        });
+        });
+      });
+    </script>
+  </body>
+</html>
